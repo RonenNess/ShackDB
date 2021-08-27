@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid main-container">
+  <div class="row">
+
+    {% if not gotStorages %}
+      <h1>You don't have any storages to explore.</h1>
+      <h4>Create a new storage <a href="/web/storages">here</a>.</h4>
+    {% endif %}
+
+    <!-- storage buttons -->
+    {% for storageType, storagesList in storages %}
+      {% if storagesList.length %}
+        <h2>'{{storageType}}' storages</h2>
+        <ul class="list-group">
+          {% for storage in storagesList %}
+            <li class="list-group-item"><a href="/web/explore/{{storageType}}/{{storage}}"><h4>{{storage}}</h4></a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endfor %}
+    
+  </div>
+</div>
+{% endblock %}
+
+{% block tail %}
+<script src="/js/pages/explore.js"></script>
+{% endblock %}

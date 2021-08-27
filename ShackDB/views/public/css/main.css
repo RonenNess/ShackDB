@@ -1,0 +1,190 @@
+@font-face {
+    font-family: titleFont;
+    src: url(/fonts/sullivan-fill.otf);
+}
+
+.main-container {
+    padding: 2em 2em 2em 2em !important;
+}
+
+.banner-title {
+    font-family: titleFont;
+    font-size: 7em;
+    margin: 0;
+    padding: 0;
+    color: #62b1f6;
+}
+
+.inliner
+{
+    display: inline-block !important;
+    width: initial !important;
+}
+
+.icon-button
+{
+    font-size: 140%;
+    cursor: pointer;
+    color: #62b1f6;
+    border: #62b1f6 1px solid;
+    padding: 0.2em;
+    border-radius: 0.4em;
+}
+
+.alert-theme {
+    color: #62b1f6;
+    background-color: #ffffff;
+    border-color: #62b1f6;
+}
+
+button.active {
+    background-color: #62b1f6 !important;
+}
+
+.center-y {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+a {
+    text-decoration: none;
+    color: #62b1f6;
+}
+
+@media (max-width:1020px) {
+    .hide-sm {
+        display: none;
+    }
+}
+
+@media (min-width:1021px) {
+    .hide-not-sm {
+        display: none;
+    }
+}
+
+@media (max-width:830px) {
+    .hide-xs {
+        display: none;
+    }
+}
+
+.disabled-item {
+    text-decoration: line-through;
+}
+  
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: #62b1f6 !important;
+}
+
+.btn-primary {
+    background-color: #62b1f6!important;
+}
+
+.btn-success {
+    background-color: #45aa85!important;
+}
+
+.btn-danger {
+    background-color: #d95a66!important;
+}
+
+.danger-color {
+    color: #d95a66
+}
+
+.success-color {
+    color: #45aa85;
+}
+
+.alert-thin {
+    padding: 0.255em;
+    font-size: 1.45em;
+    margin: auto;
+}
+
+.btn-warning {
+    color: #fff!important;
+    background-color: #eab71f!important;
+    border-color: #c39200!important;
+}
+
+.matric-title
+{
+    font-size: 115%;
+    margin-bottom: 0em;
+}
+
+.matric-value
+{
+    font-size: 145%;
+    color: #62b1f6;
+}
+
+.theme-color
+{
+    color: #62b1f6;
+}
+
+img, p, h1, h2, h3, h4, h5, label, span, br {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+
+        -webkit-user-drag: none;
+         -khtml-user-drag: none;
+           -moz-user-drag: none;
+             -o-user-drag: none;
+                user-drag: none;
+
+           pointer-events: none;
+}
+
+.allow-select {
+    -webkit-touch-callout: initial!important; /* iOS Safari */
+      -webkit-user-select: initial!important; /* Safari */
+       -khtml-user-select: initial!important; /* Konqueror HTML */
+         -moz-user-select: initial!important; /* Old versions of Firefox */
+          -ms-user-select: initial!important; /* Internet Explorer/Edge */
+              user-select: initial!important; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+
+        -webkit-user-drag: initial!important;
+         -khtml-user-drag: initial!important;
+           -moz-user-drag: initial!important;
+             -o-user-drag: initial!important;
+                user-drag: initial!important;
+
+           pointer-events: initial!important;
+
+    cursor: text;
+}
+
+.allow-select * {
+    -webkit-touch-callout: initial!important; /* iOS Safari */
+      -webkit-user-select: initial!important; /* Safari */
+       -khtml-user-select: initial!important; /* Konqueror HTML */
+         -moz-user-select: initial!important; /* Old versions of Firefox */
+          -ms-user-select: initial!important; /* Internet Explorer/Edge */
+              user-select: initial!important; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+
+        -webkit-user-drag: initial!important;
+         -khtml-user-drag: initial!important;
+           -moz-user-drag: initial!important;
+             -o-user-drag: initial!important;
+                user-drag: initial!important;
+
+           pointer-events: initial!important;
+
+    cursor: text;
+}
+
+a {
+    cursor: pointer;
+    pointer-events: all;
+}

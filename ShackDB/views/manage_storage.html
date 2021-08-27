@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid" style="padding: 0px; overflow-x: hidden; overflow-y: hidden;">
+
+  <div id="main-div" class="row" style="margin:0;">
+
+    <div class="col-12">
+      <div class="card" style="padding: 0.75em;">
+        <p class="matric-title">Readonly Key</p>
+        <p id="readonly-key-show" class="matric-value allow-select" style="margin-bottom: 1.35em;" data-toggle="tooltip" data-placement="bottom" title="Readonly Key can be used in API to get only reading permissions.">{{readonlyKey}}</p>
+        <button id="regenerate-readonly-key-btn" style="position:absolute; right:0px; bottom:0px;" type="button" class="btn btn-warning">Regenerate Key</button>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card" style="padding: 0.75em;">
+        <p class="matric-title">Secret Key</p>
+        <p id="secret-key-show" class="matric-value allow-select" style="margin-bottom: 1.35em;" data-toggle="tooltip" data-placement="bottom" title="Secret Key can be used in API to get full read and write permission.">{{secretKey}}</p>
+        <button id="regenerate-secret-key-btn" style="position:absolute; right:0px; bottom:0px;" type="button" class="btn btn-warning">Regenerate Key</button>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card" style="padding: 0.75em;">
+        <div class="row">
+          <div class="col-6">
+            <button id="purge-storage-btn" style="display: block; width:100%" type="button" class="btn btn-warning btn-lg">Purge Storage</button>
+          </div>
+          <div class="col-6">
+            <button id="delete-storage-btn" style="display: block; width:100%" type="button" class="btn btn-danger btn-lg">Delete Storage</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="storage-deleted-div" style="display: none;">
+    <h3>Storage deleted. Nothing left to do here.</h3>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block tail %}
+
+<!-- template to ask for approve for dangerous action -->
+<template id="approve-danger-modal">
+  <div class="modal fade" id="approve-danger-modal" tabindex="-1" role="dialog" aria-labelledby="approve-danger-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Title</h5>
+        </div>
+        <div class="modal-body">
+          <p class="main-text">Main text</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger approve-danger-btn">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<!-- / template to ask for approve for dangerous action -->
+
+<script src="/js/pages/manage_storage.js"></script>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{
+
+    "paths": {
+        "dataRoot": "data/test",
+        "usersDataRoot": "users",
+        "storagesDataRoot": "storage"
+    },
+
+    "server": {
+        "port": 8001,
+        "securedPort": null,
+        "hostname": "0.0.0.0",
+        "enableWebPages": true,
+        "apiUrl": "/api/"
+    },
+
+    "storageTypes": {
+        "files": {"drivers": "./storage/lib/drivers/drivers_filesystem", "config": {"test": "RamDrivers"}, "policy": null},
+        "cached_files": {"drivers": "./storage/lib/drivers/drivers_cached_filesystem", "config": {"timeToFlushSeconds": 2}, "policy": null},
+        "memory": {"drivers": "./storage/lib/drivers/drivers_memory", "config": {"test": "RamDrivers"}, "policy": null},
+        "files_limited": {"drivers": "./storage/lib/drivers/drivers_filesystem", "config": {"test": "RamDrivers"}, "policy": "limited"},
+        "cached_files_limited": {"drivers": "./storage/lib/drivers/drivers_cached_filesystem", "config": {"timeToFlushSeconds": 2}, "policy": "limited"},
+        "memory_limited": {"drivers": "./storage/lib/drivers/drivers_memory", "config": {"test": "RamDrivers"}, "policy": "limited"},
+        "files_with_cache": {"drivers": "./storage/lib/drivers/drivers_filesystem", "config": {"test": "RamDrivers"}, "policy": null, "cache": "dictionary"},
+        "cached_files_with_cache": {"drivers": "./storage/lib/drivers/drivers_cached_filesystem", "config": {"timeToFlushSeconds": 2}, "policy": null, "cache": "dictionary"}
+    },
+
+    "usersStorageType": "files",
+
+    "storage": {
+        "keepMetadata": false,
+        "usageStatsReportInterval": 0
+    },
+
+    "policies": {
+        "limited": {"maxSizeBytes": 1550, "maxKeys": 150, "maxKeyLength": 16, "maxValueSizeBytes": 500}
+    },
+
+    "caches": {
+        "dictionary": {"class": "./storage/lib/cache/dictionary_cache", "config": {"maxKeys": 10, "keysToReduceTo": 8}}
+    },
+
+    "security": {
+        "maxFailedLoginAttempts": 20,
+        "mustBeAdminToCreateUser": false,
+        "privateKeyFile": null,
+        "certificateFile": null,
+        "authTokenMaxAgeSeconds": null,
+        "cookiesSecret": "shacookie",
+        "localhostManagementOnly": false
+    },
+
+    "users": [
+        {
+            "enabled": true,
+            "username": "admin",
+            "password": "admin123",
+            "superuser": true
+        },
+        {
+            "enabled": true,
+            "username": "test_builtin_user",
+            "password": "123456",
+            "superuser": false
+        }
+    ]
+}

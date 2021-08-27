@@ -1,0 +1,55 @@
+{
+    "paths": {
+        "dataRoot": "data/prod",
+        "usersDataRoot": "users",
+        "storagesDataRoot": "storage"
+    },
+
+    "server": {
+        "port": 8000,
+        "securedPort": null,
+        "hostname": "0.0.0.0",
+        "enableWebPages": true,
+        "apiUrl": "/api/"
+    },
+
+    "storageTypes": {
+        "files": {"drivers": "./storage/lib/drivers/drivers_filesystem", "config": null, "policy": null, "cache": "dictionary"},
+        "cached_files": {"drivers": "./storage/lib/drivers/drivers_cached_filesystem", "config": null, "policy": null, "cache": "dictionary"},
+        "memory": {"drivers": "./storage/lib/drivers/drivers_memory", "config": null, "policy": null}
+    },
+
+    "usersStorageType": "files",
+
+    "storage": {
+        "keepMetadata": true,
+        "usageStatsReportInterval": 600
+    },
+
+    "policies": {
+        "example": {"maxSizeBytes": 1000, "maxKeys": 10, "maxKeyLength": 16, "maxValueSizeBytes": 500}
+    },
+
+    "caches": {
+        "dictionary": {"class": "./storage/lib/cache/dictionary_cache", "config": {"maxKeys": 1000, "keysToReduceTo": 800}}
+    },
+
+    "security": {
+        "maxFailedLoginAttempts": 20,
+        "mustBeAdminToCreateUser": true,
+        "privateKeyFile": null,
+        "certificateFile": null,
+        "authTokenMaxAgeSeconds": null,
+        "cookiesSecret": "shacookie",
+        "localhostManagementOnly": false
+    },
+
+    "users": [
+        {
+            "enabled": true,
+            "username": "admin",
+            "password": "admin123",
+            "superuser": true
+        }
+    ]
+}

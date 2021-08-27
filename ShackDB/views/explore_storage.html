@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid main-container">
+  <div class="row">
+
+    <h1>{{storageType}}/{{storageId}}</h1>
+
+    <div class="row">
+
+        <div class="col-sm-6 col-md-6 card" data-toggle="tooltip" title="How many keys there are currently in this storage.">
+          <p class="matric-title">Keys Count</p>
+          <p class="matric-value"><span id="total-keys-count">{{keys.length}}</span>
+            {% if maxKeys %} / {{maxKeys}} {% endif %}</p>
+        </div>
+
+        <div class="col-sm-6 col-md-6 card" data-toggle="tooltip" title="Total size of all keys, values and metadata of this storage.">
+          <p class="matric-title">Total Size</p>
+          <p class="matric-value"><span id="total-size-kb">{{sizeKb}}</span> KB
+            {% if maxSizeKb %} / {{maxSizeKb}} KB {% endif %}</p>
+        </div>
+        
+        <div class="col-sm-6 col-md-6 card" data-toggle="tooltip" title="The root path of this storage.">
+          <p class="matric-title">Storage Root</p>
+          <p class="matric-value" style="font-size: 110%;">{{storageRoot}}</p>
+        </div>
+
+        <div class="col-sm-6 col-md-6 card" data-toggle="tooltip" title="Changes this storage has waiting to be flushed. Only relevant to storage types that batch changes.">
+          <p class="matric-title">Pending Changes</p>
+          <p class="matric-value" style="font-size: 110%;"><span id="pending-changes">{{pendingChanges}}</span></p>
+        </div>
+        
+    </div>
+
+    <!-- all keys -->
+    <h4 style="margin-top: 1.5em;">Storage Keys:</h4>
+    <ul class="list-group" id="keys-container">
+    </ul>
+
+    <!-- new key -->
+    <button id="add-value-btn" type="button" class="btn btn-success" style="display:inline; width:initial; margin-top:1em">Add Value</button>
+    
+  </div>
+</div>
+{% endblock %}
+
+{% block tail %}
+
+<!-- new value modal -->
+<div class="modal fade" id="new-value-modal" tabindex="-1" role="dialog" aria-labelledby="new-value-label" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="new-value-label">New Value</h5>
+      </div>
+      <div class="modal-body">
+        <p>Create a new value:</p>
+        <form id="new-value-form">
+          <div class="form-group">
+
+            <input id="new-value-name-input" type="text" minlength="1" data-input-pattern="slug" class="form-control" placeholder="Value key" required>
+            <label style="font-size: 80%; color: #aaa;">Key may only contain English alphabet, numbers, dots and dashes.</label>
+
+            <textarea type="text" minlength="1" class="form-control" id="new-value-data-input" rows="5" required>
+              {"key": "data"}
+            </textarea>
+            <p style="margin-top:0.5em">Data type: <span id="new-value-data-type" style="font-weight: bold;" class="theme-color"></span></p>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-dismiss="modal">Cancel</button>
+        <button id="create-value-btn-done" type="button" class="btn btn-primary">Set Value</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / new value modal -->
+
+<!-- edit value modal -->
+<div class="modal fade" id="edit-value-modal" tabindex="-1" role="dialog" aria-labelledby="edit-value-label" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edit-value-label">Edit Value of '<span id="edit-value-key"></span>'</h5>
+      </div>
+      <div class="modal-body">
+        <form id="new-value-form">
+          <div class="form-group">
+
+            <textarea type="text" minlength="1" class="form-control" id="edit-value-data-input" rows="5" required></textarea>
+            <p style="margin-bottom: 0em; margin-top:0.5em">Data type: <span id="edit-value-data-type" style="font-weight: bold;" class="theme-color"></span></p>
+            <hr />
+            <p style="margin-bottom: 0em;">Last modified: <span id="edit-value-modified" style="font-weight: bold;" class="theme-color"></span></p>
+            <p style="margin-bottom: 0em;">Value source: <span id="edit-value-modifier" style="font-weight: bold;" class="theme-color"></span></p>
+            <p>Value size (bytes): <span id="edit-value-size" style="font-weight: bold;" class="theme-color"></span></p>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-dismiss="modal">Close</button>
+        <button id="edit-value-btn-delete" type="button" class="btn btn-danger">Delete Value</button>
+        <button id="edit-value-btn-update" type="button" class="btn btn-primary">Update Value</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / new value modal -->
+
+<script src="/js/pages/explore_storage.js"></script>
+
+{% endblock %}

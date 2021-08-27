@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+<style>
+  body {
+    background: #212529;
+  };
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div id="login-card" class="card col-sm-12 col-md-9 col-xl-6" style="margin:auto; position:relative; top:-1000px; border-radius:25rem!important;">
+  
+  <!-- big logo and title -->
+  <img style="margin: auto; display: block;" src="/assets/logo.png" />
+  <h1 class="banner-title" style="text-align: center; margin-top: -0.75em;">ShackDB</h1>
+
+  <!-- login form -->
+  <div class="col-xl-6 col-md-7 col-sm-8" style="text-align:center; padding:2em 2em 2em 2em; margin:auto;">
+    <form id="login-form" style="width:100%">
+
+      <div class="form-group form-group-lg">
+        <input type="text" class="form-control form-control-lg" id="login-username" placeholder="Username" required maxlength="48">
+      </div>
+      <div class="form-group form-group-lg">
+        <input type="password" class="form-control form-control-lg" id="login-password" placeholder="Password" required maxlength="48">
+      </div>
+
+      <div id="login-error" class="alert alert-danger" style="display: none;" role="alert"></div>
+
+      <div class="row" style="margin-top:1em">
+        <div class="col-12">
+          <button id="login-btn" type="button" class="btn btn-success btn-lg" style="width:100%;">Login</button>
+          <a target="_blank" href="/web/docs/#users">How to create users?</a>
+        </div>
+      </div>
+
+    </form>
+    <br />
+  </div>
+</div>
+<br />
+<br />
+<br />
+{% endblock %}
+
+
+{% block tail %}
+<script src="/js/pages/login.js"></script>
+{% endblock %}
+

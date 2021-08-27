@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Shack DB</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="ShackDB: simple & fast key-value storage.">
+    <meta name="keywords" content="key-value, storage, cache, db, database">
+    <meta name="author" content="Ronen Ness">
+    <meta keyw="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/css/main.css" rel="stylesheet" media="screen">
+    <link href="/fa/css/all.min.css" rel="stylesheet" media="screen">
+
+    {% block head %}
+    {% endblock %}
+  </head>
+
+  <body>
+
+    <script>
+      window.shaconfig = {
+        apiRoot: "{{config.apiRoot}}",
+        activePage: "{{config.activePage}}",
+        userId: "{{username}}",
+        storageId: "{{storageId}}",
+        storageType: "{{storageType}}",
+        storageSecret: "{{storageSecret}}",
+        apiKey: "{{apiKey}}",
+      }
+    </script>
+
+    {% if breadcrumbs %}
+      <div style="padding:1em">
+        {% for breadcrumb in breadcrumbs %}
+          <a href="{{breadcrumb.url}}" class="shack-breadcrumb">{{breadcrumb.name}}</a> 
+          {% if not loop.last %}
+          <span> / </span>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="/js/jquery.3.6.0.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+ 
+    <!-- update active sidebar button outside the iframe -->
+    <script>
+      if (shaconfig.activePage) {
+        parent.postMessage(JSON.stringify({activePage: shaconfig.activePage}));
+      }
+    </script>
+
+    <!-- show error / success message -->
+    <script>
+      function showErrorMessage(title, message)
+      {
+          $('#error-message-modal').modal('show');
+          $('#error-message-modal-label').text(title);
+          $('#error-message-modal-message').text(message);
+      }
+
+      function showSuccessMessage(title, message, onDone)
+      {
+          $('#success-message-modal').modal('show').find(".btn-ok").off('click').on('click', onDone || function() {});
+          $('#success-message-modal-label').text(title);
+          $('#success-message-modal-message').text(message);
+      }
+    </script>
+   
+   {% block tail %}
+   {% endblock %}
+
+    <!-- error message modal -->
+    <div class="modal fade" id="error-message-modal" tabindex="-1" role="dialog" aria-labelledby="error-message-modal-label" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="error-message-modal-label">Error!</h5>
+          </div>
+          <div class="modal-body">
+            <p id="error-message-modal-message">Unknown error</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / error message modal -->
+
+    <!-- success message modal -->
+    <div class="modal fade" id="success-message-modal" tabindex="-1" role="dialog" aria-labelledby="success-message-modal-label" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="success-message-modal-label">Success!</h5>
+          </div>
+          <div class="modal-body">
+            <p id="success-message-modal-message">Mission Complete</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-ok" data-bs-dismiss="modal" data-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / success message modal -->
+
+    <!-- enable tooltips -->
+    <script>
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+          delay: { show: 1000, hide: 0 },
+          placement: (tooltip, elem) => { 
+            return $(elem).attr('data-placement') || 'top'; 
+          }
+        });
+      })
+    </script>
+
+    <!-- init slug input fields -->
+    <script>
+
+      let slugs = $('[data-input-pattern="slug"]');
+      slugs.on('keyup', function() {
+          let newVal = $(this).val().replace(/ /g, '-').replace(/[^a-zA-Z0-9-_.]/gi, '');
+          if (newVal[0] === '.') { newVal = newVal.substring(1); }
+          $(this).val(newVal);
+      });
+      for (let i = 0; i < slugs.length; ++i) {
+        let elem = slugs[i];
+        if (!elem.maxLength || elem.maxLength <= 0) { elem.maxLength = 56; }
+        elem.minLength = elem.minLength || 1;
+        elem.pattern = elem.pattern || "[a-zA-Z0-9-_.]{0," + elem.maxLength + "}";
+      }
+    </script>
+
+  </body>
+</html>

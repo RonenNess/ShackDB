@@ -1,0 +1,1007 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid" style="padding: 0px; overflow-x: hidden; overflow-y: hidden;">
+
+  <!-- secret key and readonly key -->
+  <div class="row" style="margin:0;">
+
+    <div class="col-lg-4 col-md-12">
+      <div class="card" style="padding: 0.75em;">
+        <p class="matric-title">API Key</p>
+        <p class="matric-value allow-select" data-toggle="tooltip" title="API key is the storage's unique identifier, which must be included in all API calls.">{{apiKey}}</p>
+        <i id="copy-api-key" data-key="{{apiKey}}" title="Copy to clipboard" class="fas fa-copy icon-button" style="position:absolute; right:5px; bottom:5px;"></i>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-12">
+      <div class="card" style="padding: 0.75em;">
+        <p class="matric-title">Readonly Key</p>
+        <p class="matric-value allow-select" data-toggle="tooltip" title="Readonly Key can be used in API to get only reading permissions.">{{readonlyKey}}</p>
+        <i id="copy-readonly-key" data-key="{{readonlyKey}}" title="Copy to clipboard" class="fas fa-copy icon-button" style="position:absolute; right:5px; bottom:5px;"></i>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-12">
+      <div class="card" style="padding: 0.75em;">
+        <p class="matric-title">Secret Key</p>
+        <p class="matric-value allow-select" data-toggle="tooltip" title="Secret Key can be used in API to get full read and write permission.">{{secretKey}}</p>
+        <i id="copy-secret-key" data-key="{{secretKey}}" title="Copy to clipboard" class="fas fa-copy icon-button" style="position:absolute; right:5px; bottom:5px;"></i>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- language selection buttons -->
+  <div class="row" style="margin:0; margin-top:1em;">
+
+    <h5>Sample code for API calls in..</h5>
+      
+    <button type="button" class="btn btn-secondary select-lang-button" data-code-for="JavaScript" style="margin-right: 0.2em">
+      JavaScript
+    </button>
+
+    <button type="button" class="btn btn-secondary select-lang-button" data-code-for="JQuery" style="margin-right: 0.2em">
+      JQuery
+    </button>
+  
+    <button type="button" class="btn btn-secondary select-lang-button" data-code-for="Python" style="margin-right: 0.2em">
+      Python
+    </button> 
+  
+    <button type="button" class="btn btn-secondary select-lang-button" data-code-for="CSharp" style="margin-right: 0.2em">
+      C#
+    </button>
+    
+  </div>
+
+  <!-- code examples -->
+  <div style="margin-top: 1em;">
+
+    <p class="code-examples code-examples-JQuery">Below are code samples on how to access this storage using <span class="theme-color">JavaScript</span> with <span class="theme-color">JQuery</span>:</p>
+    <p class="code-examples code-examples-JavaScript">Below are code samples on how to access this storage using <span class="theme-color">Pure JavaScript</span>:</p>
+    <p class="code-examples code-examples-Python">Below are code samples on how to access this storage using <span class="theme-color">Python</span> with <span class="theme-color">requests</span>:</p>
+    <p class="code-examples code-examples-CSharp">Below are code samples on how to access this storage using <span class="theme-color">C# Core</span>:</p>
+
+    <div class="row" class="margin:0;">
+
+      <!-- api selection -->
+      <div class="col-lg-1 col-md-2 col-sm-3">
+        <button type="button" data-code-for="get" class="btn btn-primary example-select-btn" style="width: 100%; margin-bottom: 0.2em;">Get</button>
+        <button type="button" data-code-for="set" class="btn btn-primary example-select-btn" style="width: 100%; margin-bottom: 0.2em;">Set</button>
+        <button type="button" data-code-for="update" class="btn btn-primary example-select-btn" style="width: 100%; margin-bottom: 0.2em;">Update</button>
+        <button type="button" data-code-for="delete" class="btn btn-primary example-select-btn" style="width: 100%; margin-bottom: 0.2em;">Delete</button>
+        <button type="button" data-code-for="list" class="btn btn-primary example-select-btn" style="width: 100%; margin-bottom: 0.2em;">List</button>
+        <button type="button" data-code-for="exist" class="btn btn-primary example-select-btn" style="width: 100%; margin-bottom: 0.2em;">Exist</button>
+        <button type="button" data-code-for="purge" class="btn btn-primary example-select-btn" style="width: 100%; margin-bottom: 0.2em;">Purge</button>
+      </div>
+
+      <!-- languages divs -->
+      <div class="col-lg-11 col-md-10 col-sm-9 allow-select">
+
+
+
+        <!-- JAVASCRIPT WITH JQUERY -->
+        <div class="code-examples code-examples-JQuery">
+
+          <div class="code-example code-example-get">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// get value from storage
+$.ajax({
+  type: "POST",
+  url: "{{hostname}}{{config.apiRoot}}access",
+  dataType: 'json',
+  contentType: 'application/json',
+  data: JSON.stringify({
+      apiKey: "{{apiKey}}",
+      readonlyKey: "{{readonlyKey}}",
+      retrieveMeta: false, // <-- set to true to include metadata
+      key: "key-to-get",
+      action: 'get'
+  }),
+  success: (response) => {  
+    console.log("Got value: ", response.data);
+  },
+  error: (err) => {
+    console.error("Failed to get value:", err.responseJSON ? err.responseJSON.error : err.statusText);
+  },
+});
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-set">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// set value in storage
+$.ajax({
+  type: "POST",
+  url: "{{hostname}}{{config.apiRoot}}access",
+  dataType: 'json',
+  contentType: 'application/json',
+  data: JSON.stringify({
+      apiKey: "{{apiKey}}",
+      secretKey: "{{secretKey}}",
+      key: "key-to-set",
+      data: {"hello": "world"},
+      action: 'set'
+  }),
+  success: (response) => {  
+    console.log("Successfully set value!");
+  },
+  error: (err) => {
+    console.error("Failed to set value:", err.responseJSON ? err.responseJSON.error : err.statusText);
+  },
+});
+              </code>
+            </pre>
+          </div>
+   
+
+          <div class="code-example code-example-update">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// update key in existing value in storage
+$.ajax({
+  type: "POST",
+  url: "{{hostname}}{{config.apiRoot}}access",
+  dataType: 'json',
+  contentType: 'application/json',
+  data: JSON.stringify({
+      apiKey: "{{apiKey}}",
+      secretKey: "{{secretKey}}",
+      key: "key-to-set",
+      data: {"hello": "world"},
+      action: 'update'
+  }),
+  success: (response) => {  
+    console.log("Successfully updated value! New value: ", response.data);
+  },
+  error: (err) => {
+    console.error("Failed to set value:", err.responseJSON ? err.responseJSON.error : err.statusText);
+  },
+});
+              </code>
+            </pre>
+          </div>
+          
+          
+          <div class="code-example code-example-delete">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// delete value from storage
+$.ajax({
+  type: "POST",
+  url: "{{hostname}}{{config.apiRoot}}access",
+  dataType: 'json',
+  contentType: 'application/json',
+  data: JSON.stringify({
+      apiKey: "{{apiKey}}",
+      secretKey: "{{secretKey}}",
+      key: "key-to-delete",
+      action: 'delete'
+  }),
+  success: (response) => {  
+    console.log("Successfully deleted value!");
+  },
+  error: (err) => {
+    console.error("Failed to delete value:", err.responseJSON ? err.responseJSON.error : err.statusText);
+  },
+});
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-list">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// list all keys in storage
+$.ajax({
+  type: "POST",
+  url: "{{hostname}}{{config.apiRoot}}access",
+  dataType: 'json',
+  contentType: 'application/json',
+  data: JSON.stringify({
+      apiKey: "{{apiKey}}",
+      readonlyKey: "{{readonlyKey}}",
+      action: 'list'
+  }),
+  success: (response) => {  
+    console.log("Got keys: ", responsekeys);
+  },
+  error: (err) => {
+    console.error("Failed to get keys:", err.responseJSON ? err.responseJSON.error : err.statusText);
+  },
+});
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-exist">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// check if a key exists without retrieving it
+$.ajax({
+  type: "POST",
+  url: "{{hostname}}{{config.apiRoot}}access",
+  dataType: 'json',
+  contentType: 'application/json',
+  data: JSON.stringify({
+      apiKey: "{{apiKey}}",
+      readonlyKey: "{{readonlyKey}}",
+      key: "key-to-check",
+      action: 'exist'
+  }),
+  success: (response) => {  
+    console.log("Key found: ", response.exist);
+  },
+  error: (err) => {
+    console.error("Failed to check key:", err.responseJSON ? err.responseJSON.error : err.statusText);
+  },
+});
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-purge">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// delete all values and keys in storage
+$.ajax({
+  type: "POST",
+  url: "{{hostname}}{{config.apiRoot}}access",
+  dataType: 'json',
+  contentType: 'application/json',
+  data: JSON.stringify({
+      apiKey: "{{apiKey}}",
+      secretKey: "{{secretKey}}",
+      action: 'purge'
+  }),
+  success: (response) => {  
+    console.log("Successfully purged database!");
+  },
+  error: (err) => {
+    console.error("Failed to purge:", err.responseJSON ? err.responseJSON.error : err.statusText);
+  },
+});
+              </code>
+            </pre>
+          </div>
+          
+        </div>
+        <!-- // JAVASCRIPT WITH JQUERY -->
+
+
+
+
+        
+        <!-- PURE JAVASCRIPT -->
+        <div class="code-examples code-examples-JavaScript">
+
+          <div class="code-example code-example-get">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// get value from storage
+var xhr = new XMLHttpRequest();
+xhr.open('POST', '{{hostname}}{{config.apiRoot}}access', true);
+xhr.setRequestHeader("Content-Type", "application/json");
+
+xhr.onreadystatechange = function() {
+  if(xhr.readyState == 4) {
+    if(xhr.status == 200) {
+      console.log("Got value:", JSON.parse(xhr.responseText).data);
+    }
+    else {
+      console.error(xhr.status);
+    }
+  }
+};
+
+xhr.send(JSON.stringify({
+  apiKey: "{{apiKey}}",
+  readonlyKey: "{{readonlyKey}}",
+  retrieveMeta: false, // <-- set to true to include metadata
+  key: "key-to-get",
+  action: 'get'
+}));
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-set">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// set value in storage
+var xhr = new XMLHttpRequest();
+xhr.open('POST', '{{hostname}}{{config.apiRoot}}access', true);
+xhr.setRequestHeader("Content-Type", "application/json");
+
+xhr.onreadystatechange = function() {
+  if(xhr.readyState == 4) {
+    if(xhr.status == 200) {
+      console.log("Value set!");
+    }
+    else {
+      console.error(xhr.status);
+    }
+  }
+};
+
+xhr.send(JSON.stringify({
+  apiKey: "{{apiKey}}",
+  secretKey: "{{secretKey}}",
+  key: "key-to-set",
+  data: {"hello": "world"},
+  action: 'set'
+}));
+              </code>
+            </pre>
+          </div>
+          
+
+          <div class="code-example code-example-update">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// update key in existing value in storage
+var xhr = new XMLHttpRequest();
+xhr.open('POST', '{{hostname}}{{config.apiRoot}}access', true);
+xhr.setRequestHeader("Content-Type", "application/json");
+
+xhr.onreadystatechange = function() {
+  if(xhr.readyState == 4) {
+    if(xhr.status == 200) {
+      console.log("Value updated! New value: ", JSON.parse(xhr.responseText).data);
+    }
+    else {
+      console.error(xhr.status);
+    }
+  }
+};
+
+xhr.send(JSON.stringify({
+  apiKey: "{{apiKey}}",
+  secretKey: "{{secretKey}}",
+  key: "key-to-set",
+  data: {"hello": "world"},
+  action: 'update'
+}));
+              </code>
+            </pre>
+          </div>
+
+
+          <div class="code-example code-example-delete">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// delete value from storage
+var xhr = new XMLHttpRequest();
+xhr.open('POST', '{{hostname}}{{config.apiRoot}}access', true);
+xhr.setRequestHeader("Content-Type", "application/json");
+
+xhr.onreadystatechange = function() {
+  if(xhr.readyState == 4) {
+    if(xhr.status == 200) {
+      console.log("Value deleted!");
+    }
+    else {
+      console.error(xhr.status);
+    }
+  }
+};
+
+xhr.send(JSON.stringify({
+  apiKey: "{{apiKey}}",
+  secretKey: "{{secretKey}}",
+  key: "key-to-delete",
+  action: 'delete'
+}));
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-list">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// list all keys in storage
+var xhr = new XMLHttpRequest();
+xhr.open('POST', '{{hostname}}{{config.apiRoot}}access', true);
+xhr.setRequestHeader("Content-Type", "application/json");
+
+xhr.onreadystatechange = function() {
+  if(xhr.readyState == 4) {
+    if(xhr.status == 200) {
+      console.log("Got keys:", JSON.parse(xhr.responseText).keys);
+    }
+    else {
+      console.error(xhr.status);
+    }
+  }
+};
+
+xhr.send(JSON.stringify({
+  apiKey: "{{apiKey}}",
+  readonlyKey: "{{readonlyKey}}",
+  action: 'list'
+}));
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-exist">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// check if a key exists without retrieving it
+var xhr = new XMLHttpRequest();
+xhr.open('POST', '{{hostname}}{{config.apiRoot}}access', true);
+xhr.setRequestHeader("Content-Type", "application/json");
+
+xhr.onreadystatechange = function() {
+  if(xhr.readyState == 4) {
+    if(xhr.status == 200) {
+      console.log("Key found:", JSON.parse(xhr.responseText).exist);
+    }
+    else {
+      console.error(xhr.status);
+    }
+  }
+};
+
+xhr.send(JSON.stringify({
+  apiKey: "{{apiKey}}",
+  readonlyKey: "{{readonlyKey}}",
+  key: "key-to-check",
+  action: 'exist'
+}));
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-purge">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// delete all values and keys in storage
+var xhr = new XMLHttpRequest();
+xhr.open('POST', '{{hostname}}{{config.apiRoot}}access', true);
+xhr.setRequestHeader("Content-Type", "application/json");
+
+xhr.onreadystatechange = function() {
+  if(xhr.readyState == 4) {
+    if(xhr.status == 200) {
+      console.log("Successfully purged database!");
+    }
+    else {
+      console.error(xhr.status);
+    }
+  }
+};
+
+xhr.send(JSON.stringify({
+  apiKey: "{{apiKey}}",
+  secretKey: "{{secretKey}}",
+  action: 'purge'
+}));
+              </code>
+            </pre>
+          </div>
+          
+        </div>
+        <!-- // PURE JAVASCRIPT -->
+
+
+
+        
+        <!-- PYTHON -->
+        <div class="code-examples code-examples-Python">
+
+          <div class="code-example code-example-get">
+            <pre>
+              <code class="language-python code-sample-textarea"># get value from storage
+import requests
+
+payload = dict(
+  apiKey= "{{apiKey}}",
+  readonlyKey= "{{readonlyKey}}",
+  retrieveMeta= False, # <-- set to true to include metadata
+  key= "key-to-get",
+  action= 'get'
+)
+response = requests.post('{{hostname}}{{config.apiRoot}}access', json=payload)
+
+if response.ok:
+    print("Data: ", response.json()['data'])
+else:
+    print("Error! " + response.text)
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-set">
+            <pre>
+              <code class="language-python code-sample-textarea"># set value in storage
+import requests
+
+payload = dict(
+  apiKey= "{{apiKey}}",
+  secretKey= "{{secretKey}}",
+  key= "key-to-set",
+  data= {"hello": "world"},
+  action= 'set'
+)
+response = requests.post('{{hostname}}{{config.apiRoot}}access', json=payload)
+
+if response.ok:
+    print("Value set!")
+else:
+    print("Error! " + response.text)
+              </code>
+            </pre>
+          </div>
+          
+          <div class="code-example code-example-update">
+            <pre>
+              <code class="language-python code-sample-textarea"># update key in existing value in storage
+import requests
+
+payload = dict(
+  apiKey= "{{apiKey}}",
+  secretKey= "{{secretKey}}",
+  key= "key-to-set",
+  data= {"hello": "world"},
+  action= 'update'
+)
+response = requests.post('{{hostname}}{{config.apiRoot}}access', json=payload)
+
+if response.ok:
+    print("Value updated!")
+else:
+    print("Error! " + response.text)
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-delete">
+            <pre>
+              <code class="language-python code-sample-textarea"># delete value from storage
+import requests
+
+payload = dict(
+  apiKey= "{{apiKey}}",
+  secretKey= "{{secretKey}}",
+  key= "key-to-delete",
+  action= 'delete'
+)
+response = requests.post('{{hostname}}{{config.apiRoot}}access', json=payload)
+
+if response.ok:
+    print("Value deleted!")
+else:
+    print("Error! " + response.text)
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-list">
+            <pre>
+              <code class="language-python code-sample-textarea"># list all keys in storage
+import requests
+
+payload = dict(
+  apiKey= "{{apiKey}}",
+  readonlyKey= "{{readonlyKey}}",
+  action= 'list'
+)
+response = requests.post('{{hostname}}{{config.apiRoot}}access', json=payload)
+
+if response.ok:
+    print("Keys: ", response.json()['keys'])
+else:
+    print("Error! " + response.text)
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-exist">
+            <pre>
+              <code class="language-python code-sample-textarea"># check if a key exists without retrieving it
+import requests
+
+payload = dict(
+  apiKey= "{{apiKey}}",
+  readonlyKey= "{{readonlyKey}}",
+  key= "key-to-check",
+  action= 'exist'
+)
+response = requests.post('{{hostname}}{{config.apiRoot}}access', json=payload)
+
+if response.ok:
+    print("Key found: ", response.json()['exist'])
+else:
+    print("Error! " + response.text)
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-purge">
+            <pre>
+              <code class="language-python code-sample-textarea"># delete all values and keys in storage
+import requests
+
+payload = dict(
+  apiKey= "{{apiKey}}",
+  secretKey= "{{secretKey}}",
+  action= 'purge'
+)
+response = requests.post('{{hostname}}{{config.apiRoot}}access', json=payload)
+
+if response.ok:
+    print("Successfully purged database!")
+else:
+    print("Error! " + response.text)
+              </code>
+            </pre>
+          </div>
+          
+        </div>
+        <!-- // PYTHON -->
+
+        
+        <!-- CSharp -->
+        <div class="code-examples code-examples-CSharp">
+
+          <div class="code-example code-example-get">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// get value from storage
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text.Json;
+
+class RequestDataGet
+{
+    public string apiKey { get; set; }
+    public string readonlyKey { get; set; }
+    public bool retrieveMeta { get; set; }
+    public string key { get; set; }
+    public string action { get; set; } = "get";
+}
+
+public static void GetValue()
+{
+    var httpWebRequest = (HttpWebRequest)WebRequest.Create("{{hostname}}{{config.apiRoot}}access");
+    httpWebRequest.ContentType = "application/json";
+    httpWebRequest.Method = "POST";
+
+    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+    {
+        string jsonString = JsonSerializer.Serialize(new RequestDataGet()
+        {
+            apiKey= "{{apiKey}}",
+            readonlyKey= "{{readonlyKey}}",
+            retrieveMeta= false, // <-- set to true to include metadata
+            key= "key-to-get",
+        });
+        streamWriter.Write(jsonString);
+    }
+
+    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+    if (httpResponse.StatusCode == HttpStatusCode.OK)
+    {
+      using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+      {
+        <textarea>
+  var result = streamReader.ReadToEnd();
+          var data = JsonSerializer.Deserialize<Dictionary<string, object>>(result);
+          System.Console.WriteLine("Got response: " + JsonSerializer.Serialize(data["data"]));
+        </textarea>
+      }
+    }
+}
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-set">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// set value in storage
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text.Json;
+
+class RequestDataSet
+{
+    public string apiKey { get; set; }
+    public string secretKey { get; set; }
+    public string key { get; set; }
+    public string data { get; set; }
+    public string action { get; set; } = "set";
+}
+
+public static void SetValue()
+{
+    var httpWebRequest = (HttpWebRequest)WebRequest.Create("{{hostname}}{{config.apiRoot}}access");
+    httpWebRequest.ContentType = "application/json";
+    httpWebRequest.Method = "POST";
+
+    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+    {
+        string jsonString = JsonSerializer.Serialize(new RequestDataSet()
+        {
+            apiKey= "{{apiKey}}",
+            secretKey= "{{secretKey}}",
+            data= "hello world!",
+            key= "key-to-set",
+        });
+        streamWriter.Write(jsonString);
+    }
+
+    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+    if (httpResponse.StatusCode == HttpStatusCode.OK)
+    {
+      System.Console.WriteLine("Value set!");
+    }
+}
+              </code>
+            </pre>
+          </div>
+
+
+          <div class="code-example code-example-update">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// update key in existing value in storage
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text.Json;
+
+class RequestDataUpdate
+{
+    public string apiKey { get; set; }
+    public string secretKey { get; set; }
+    public string key { get; set; }
+    public string data { get; set; }
+    public string action { get; set; } = "update";
+}
+
+public static void SetValue()
+{
+    var httpWebRequest = (HttpWebRequest)WebRequest.Create("{{hostname}}{{config.apiRoot}}access");
+    httpWebRequest.ContentType = "application/json";
+    httpWebRequest.Method = "POST";
+
+    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+    {
+        string jsonString = JsonSerializer.Serialize(new RequestDataUpdate()
+        {
+            apiKey= "{{apiKey}}",
+            secretKey= "{{secretKey}}",
+            data= "{\"hello\": \"world\"}",
+            key= "key-to-set",
+        });
+        streamWriter.Write(jsonString);
+    }
+
+    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+    if (httpResponse.StatusCode == HttpStatusCode.OK)
+    {
+      System.Console.WriteLine("Value set!");
+    }
+}
+              </code>
+            </pre>
+          </div>
+
+
+          
+          <div class="code-example code-example-delete">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// delete value from storage
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text.Json;
+
+class RequestDataDelete
+{
+    public string apiKey { get; set; }
+    public string secretKey { get; set; }
+    public string key { get; set; }
+    public string action { get; set; } = "delete";
+}
+
+public static void DeleteValue()
+{
+    var httpWebRequest = (HttpWebRequest)WebRequest.Create("{{hostname}}{{config.apiRoot}}access");
+    httpWebRequest.ContentType = "application/json";
+    httpWebRequest.Method = "POST";
+
+    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+    {
+        string jsonString = JsonSerializer.Serialize(new RequestDataDelete()
+        {
+            apiKey= "{{apiKey}}",
+            secretKey= "{{secretKey}}",
+            key= "key-to-delete"
+        });
+        streamWriter.Write(jsonString);
+    }
+
+    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+    if (httpResponse.StatusCode == HttpStatusCode.OK)
+    {
+      System.Console.WriteLine("Value deleted!");
+    }
+}
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-list">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// list all keys in storage
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text.Json;
+
+class RequestDataList
+{
+    public string apiKey { get; set; }
+    public string readonlyKey { get; set; }
+    public string action { get; set; } = "list";
+}
+
+public static void ListValues()
+{
+    var httpWebRequest = (HttpWebRequest)WebRequest.Create("{{hostname}}{{config.apiRoot}}access");
+    httpWebRequest.ContentType = "application/json";
+    httpWebRequest.Method = "POST";
+
+    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+    {
+        string jsonString = JsonSerializer.Serialize(new RequestDataList()
+        {
+            apiKey= "{{apiKey}}",
+            readonlyKey= "{{readonlyKey}}",
+        });
+        streamWriter.Write(jsonString);
+    }
+
+    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+    if (httpResponse.StatusCode == HttpStatusCode.OK)
+    {
+      using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+      {
+        <textarea>
+  var result = streamReader.ReadToEnd();
+          var data = JsonSerializer.Deserialize<Dictionary<string, object>>(result);
+          var keys = data["keys"];
+          System.Console.WriteLine("Got keys: " + JsonSerializer.Serialize(keys));
+        </textarea>
+      }
+    }
+}
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-exist">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// check if a key exists without retrieving it
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text.Json;
+
+class RequestDataExist
+{
+    public string apiKey { get; set; }
+    public string readonlyKey { get; set; }
+    public string key { get; set; }
+    public string action { get; set; } = "exist";
+}
+
+public static void CheckIfExist()
+{
+    var httpWebRequest = (HttpWebRequest)WebRequest.Create("{{hostname}}{{config.apiRoot}}access");
+    httpWebRequest.ContentType = "application/json";
+    httpWebRequest.Method = "POST";
+
+    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+    {
+        string jsonString = JsonSerializer.Serialize(new RequestDataExist()
+        {
+            apiKey= "{{apiKey}}",
+            readonlyKey= "{{readonlyKey}}",
+            key= "key-to-check",
+        });
+        streamWriter.Write(jsonString);
+    }
+
+    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+    if (httpResponse.StatusCode == HttpStatusCode.OK)
+    {
+      using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+      {
+        <textarea>
+  var result = streamReader.ReadToEnd();
+          var data = JsonSerializer.Deserialize<Dictionary<string, object>>(result);
+          System.Console.WriteLine("Exist: " + data["exist"].GetBoolean());
+        </textarea>
+      }
+    }
+}
+              </code>
+            </pre>
+          </div>
+
+          <div class="code-example code-example-purge">
+            <pre>
+              <code class="language-javascript code-sample-textarea">// delete all values and keys in storage
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text.Json;
+
+class RequestDataPurge
+{
+    public string apiKey { get; set; }
+    public string secretKey { get; set; }
+    public string action { get; set; } = "purge";
+}
+
+public static void PurgeDatabase()
+{
+    var httpWebRequest = (HttpWebRequest)WebRequest.Create("{{hostname}}{{config.apiRoot}}access");
+    httpWebRequest.ContentType = "application/json";
+    httpWebRequest.Method = "POST";
+
+    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+    {
+        string jsonString = JsonSerializer.Serialize(new RequestDataPurge()
+        {
+            apiKey= "{{apiKey}}",
+            secretKey= "{{secretKey}}",
+        });
+        streamWriter.Write(jsonString);
+    }
+
+    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+    if (httpResponse.StatusCode == HttpStatusCode.OK)
+    {
+      System.Console.WriteLine("Database purged!");
+    }
+}
+              </code>
+            </pre>
+          </div>
+          
+        </div>
+        <!-- // CSharp -->
+
+
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
+
+{% block tail %}
+
+<style>
+  .code-sample-textarea
+  {
+    margin-top: -1em;
+    width:100%;
+    resize: none;
+    height: 320px;
+  }
+
+  .select-lang-button
+  {
+    display: inline-block;
+    width: 100px;
+    margin-right: 0.25em;
+  }
+</style>
+
+<script src="/js/pages/show_storage_api.js"></script>
+
+<!-- highlight codes -->
+<link href="/css/highlight.css" rel="stylesheet" media="screen">
+<script src="/js/highlight.js"></script>
+<script>hljs.highlightAll();</script>
+
+{% endblock %}

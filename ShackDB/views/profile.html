@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid main-container">
+  <div class="row">
+      <div>
+        <h1>User profile: <strong>{{userId}}</strong></h1>
+
+          <div class="row">
+            
+            <div class="col-md-6 card" >
+              <p class="matric-title">Is Admin</p>
+              <p class="matric-value">{{superuser}}</p>
+            </div>
+
+            <div class="col-md-6 card" >
+              <p class="matric-title">Email</p>
+              <p class="matric-value">{{email}}</p>
+            </div>
+
+            <div class="col-md-6 card" >
+              <p class="matric-title">Created</p>
+              <p class="matric-value">{{createdAt}}</p>
+            </div>
+
+            <div class="col-md-6 card" >
+              <p class="matric-title">Last Updated</p>
+              <p class="matric-value">{{updatedAt}}</p>
+            </div>
+
+          </div>
+      </div>
+      <button id="update-details-btn" type="button" class="btn btn-primary btn-lg" style="margin-top: 1em; display: inline-block; width: inherit;">
+        Change Email or Password
+      </button> 
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+
+<!-- update details modal -->
+<div class="modal fade" id="update-details-modal" tabindex="-1" role="dialog" aria-labelledby="update-details-modal-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="update-details-modal-label">Update Details</h5>
+      </div>
+      <div class="modal-body">
+        <form id="update-details-form" autocomplete="off">
+          <input autocomplete="false" name="hidden" type="text" style="display:none;">
+          <div class="form-group">
+            <label for="new-email">Email address</label>
+            <input type="email" class="form-control" id="new-email" placeholder="Don't Change" >
+          </div>
+          <div class="form-group">
+            <label for="new-password">Password</label>
+            <input type="password" class="form-control" id="new-password" placeholder="Don't Change">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-dismiss="modal">Cancel</button>
+        <button id="done-update-details" type="button" class="btn btn-primary">Update Details</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / update details modal -->
+
+<script src="/js/pages/profile.js"></script>
+
+{% endblock %}

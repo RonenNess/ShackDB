@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width:250px; position:fixed; height:100%">
+  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    <img style="display:inline-block;" height="50px" src="/assets/logo.png" />
+    <span class="fs-4 theme-color" style="font-family: titleFont; font-size: 2rem !important; margin-left: 0.45em;">ShackDB</span>
+  </a>
+  <hr>
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Manage storage instances. Here you can find the API keys and code example on how to use them.">
+      <a href="#storages" class="nav-link text-white" aria-current="page">
+        <i class="fas fa-database"></i>&nbsp;&nbsp;
+        Storages
+      </a>
+    </li>
+    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="View and modify values and keys in storages you own.">
+      <a href="#explore" class="nav-link text-white">
+        <i class="fas fa-search"></i>&nbsp;&nbsp;
+        Explore
+      </a>
+    </li>
+    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Edit user profile.">
+      <a href="#user" class="nav-link text-white">
+        <i class="fas fa-user"></i>&nbsp;&nbsp;
+        User Profile
+      </a>
+    </li>
+    {% if isAdmin %}
+    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="General management and user creation. This option is only available for administrators.">
+      <a href="#manage" class="nav-link text-white">
+        <i class="fas fa-cog"></i>&nbsp;&nbsp;
+        Manage
+      </a>
+    </li>
+    {% endif %}
+    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Read the official docs.">
+      <a href="#docs" class="nav-link text-white">
+        <i class="fas fa-book"></i>&nbsp;&nbsp;
+        Docs
+      </a>
+    </li>
+  </ul>
+  <p style="margin-top: 2em; margin-bottom: 0em;"> user: <span class='theme-color'>{{username}}</span></p>
+  <hr>
+  <div>
+    <a href="#" id="logout-btn" class="nav-link text-white">
+      <i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;
+      <strong>Logout</strong>
+    </a>
+  </div>
+</div>
+
+<iframe id="main-iframe" style="border: none; height: 100%; width: calc(100% - 250px); left: 250px; position: absolute;"></iframe>
+
+{% endblock %}
+
+
+{% block tail %}
+<script src="/js/pages/main.js"></script>
+{% endblock %}

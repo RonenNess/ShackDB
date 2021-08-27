@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+<style>
+  body {
+    background: #212529;
+  };
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div id="login-card" class="card col-sm-12 col-md-9 col-xl-6" style="margin:auto; position:relative; top:2em; border-radius:25rem!important;">
+  
+  <!-- big logo and title -->
+  <img style="margin: auto; display: block;" src="/assets/logo.png" />
+  <h1 class="banner-title" style="text-align: center; margin-top: -0.75em;">ShackDB</h1>
+
+  <!-- no users error -->
+  <div class="col-xl-6 col-md-7 col-sm-8" style="text-align:center; padding:2em 2em 2em 2em; margin:auto;">
+    <h1>No valid users found!</h1>
+    <p>Either there are no users defined in app.json, or all users are currently disabled.<br /><br />
+    Read on how to define new users <a href="/web/docs/#users">here</a>.</p>
+    <br />
+  </div>
+</div>
+<br />
+<br />
+<br />
+{% endblock %}
+

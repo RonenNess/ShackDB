@@ -1,0 +1,1 @@
+pip install grip & grip "readme.md" --export & move "readme.html" "views/docs.html" & fix_readme_assets.py

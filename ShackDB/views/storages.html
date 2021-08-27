@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid main-container">
+  <div class="row">
+
+    <!-- storage types buttons -->
+    {% for storageType, storageTypeData in storages %}
+      <a class="storage-type-btn-link inliner" style="padding:0; margin:0.15em" href="#{{storageType}}">
+        <button type="button" class="storage-type-btn btn btn-secondary btn-lg" style="margin-right: 0.2em">
+          {{storageType}}
+        </button>
+      </a>
+    {% endfor %}
+    <br /><br /><br />
+
+    <!-- all storage types divs -->
+    {% for storageType, storageTypeData in storages %}
+      <div id="{{storageType}}-div" class="storage-data-div" style="display:none;">
+        <h1><strong>{{storageType}}</strong></h1>
+        <p>{{storageTypeData.description}}</p>
+
+        <div class="row">
+
+          <div class="col-sm-6 col-md-4 card" data-toggle="tooltip" title="Which drivers are used for this storage type.">
+            <p class="matric-title">Drivers</p>
+            <p class="matric-value">{{storageTypeData.drivers}}</p>
+          </div>
+          
+          <div class="col-sm-6 col-md-4 card" data-toggle="tooltip" title="Which caching layer is used for this storage type.">
+            <p class="matric-title">Caching Layer</p>
+            <p class="matric-value">{{storageTypeData.cache}}</p>
+          </div>
+
+          <div class="col-sm-6 col-md-4 card" data-toggle="tooltip" title="If the storage is not persistent, it will lose all data and keys every time the server restarts.">
+            <p class="matric-title">Persistent</p>
+            <p class="matric-value">{{storageTypeData.persistent}}</p>
+          </div>
+
+          {% for policy in storageTypeData.policies %}
+            <div class="col-sm-6 col-md-4 card" data-toggle="tooltip" title="{{policy.description}}">
+              <p class="matric-title">{{policy.title}}</p>
+              <p class="matric-value">{{policy.value}}</p>
+            </div>
+          {% endfor %}
+
+        </div>
+
+          <br />
+          <hr />
+
+          <div class="row">
+            <div class="col-4">
+              <h4>
+                Storage Name
+              </h4>
+            </div>
+            <div class="col-3">
+              <h4>
+                Storage Size
+              </h4>
+            </div>
+            <div class="col-1">
+              <h4>
+                Keys
+              </h4>
+            </div>
+            <div class="col-4">
+            </div>
+          </div>
+
+          <!-- a template to show storage instance data -->
+          <template id="storage-instance-template">
+            <div class="alert alert-theme storage-instance-div" role="alert">
+              <div class="row">
+                <div class="col-4">
+                  <h3 class="inst-name">name</h3>
+                </div>
+                <div class="col-3">
+                  <h3 class="inst-size">0 KB</h3>
+                </div>
+                <div class="col-1">
+                  <h3 class="inst-keys">0</h3>
+                </div>
+                <div class="col-4">
+                  <button type="button" class="btn btn-primary manage-storage-btn" style="margin-bottom:0.1em;">Manage</button>
+                  <a class="explore-link"><button type="button" class="btn btn-primary" style="margin-bottom:0.1em;">Explore</button></a>
+                  <button type="button" class="btn btn-success api-keys-btn" style="margin-bottom:0.1em;">API & Keys</button>
+                </div>
+              </div>
+            </div>
+          </template>
+
+          <!-- a container for all the storage instances -->
+          <div id="{{storageType}}-instances">
+          </div>
+          <hr />
+
+        <br />
+        <button type="button" class="btn btn-success create-storage-btn">Create New Storage</button>
+
+      </div>
+    {% endfor %}
+  
+  </div>
+</div>
+{% endblock %}
+
+{% block tail %}
+
+
+<!-- new storage modal -->
+<div class="modal fade" id="new-storage" tabindex="-1" role="dialog" aria-labelledby="new-storage-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="new-storage-label">New Storage</h5>
+      </div>
+      <div class="modal-body">
+        <p>Create a new storage of type '<span style="font-weight:bold;" id="new-storage-type"></span>':</p>
+        <form id="new-storage-form">
+          <div class="form-group">
+            <input type="text" minlength="1" data-input-pattern="slug" class="form-control" id="storage-name-id" placeholder="New storage name" required>
+            <label style="font-size: 80%; color: #aaa;">Name may only contain English alphabet, numbers, dots and dashes.</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-dismiss="modal">Cancel</button>
+        <button id="create-storage-btn-done" type="button" class="btn btn-primary">Create Storage</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / new storage modal -->
+
+
+<!-- storage api modal -->
+<div class="modal fade" id="storage-api-modal" tabindex="-1" role="dialog" aria-labelledby="storage-api-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-lg" style="min-width: 80%;" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="storage-api-modal-label">'<span id="storage-api-keys-name"></span>' API & Keys</h5>
+      </div>
+      <div class="modal-body">
+        <iframe id="storage-api-keys-iframe" style="width:100%; height:685px; border:none;"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-dismiss="modal">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / new storage modal -->
+
+
+<!-- manage storage modal -->
+<div class="modal fade" id="manage-storage-modal" tabindex="-1" role="dialog" aria-labelledby="manage-storage-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="manage-storage-modal-label">'<span id="manage-storage-name"></span>' Management</h5>
+      </div>
+      <div class="modal-body">
+        <iframe id="manage-storage-iframe" style="width:100%; height:350px; border:none;"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-dismiss="modal">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / new storage modal -->
+
+
+<script src="/js/pages/storages.js"></script>
+{% endblock %}

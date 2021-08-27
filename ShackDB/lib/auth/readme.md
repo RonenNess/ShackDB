@@ -1,0 +1,3 @@
+# auth
+
+Simple authentication module.
