@@ -2,7 +2,7 @@
   "name": "shackdb",
   "version": "1.0.0",
   "description": "Lean and mean key-value storage",
-  "main": "app.js",
+  "main": "shackdb.js",
   "dependencies": {
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
