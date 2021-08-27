@@ -1,1 +1,1 @@
-pip install grip & grip "readme.md" --export & move "readme.html" "ShackDB/views/docs.html"
+pip install grip & grip "readme.md" --export & move "readme.html" "ShackDB/views/docs.html" & fix_readme_assets.py
