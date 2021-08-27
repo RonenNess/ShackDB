@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Lean and mean key-value storage",
   "main": "shackdb.js",
+  "homepage": "https://github.com/RonenNess/ShackDB"
   "dependencies": {
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
@@ -26,6 +27,10 @@
     "key-value",
     "cache"
   ],
+  "bugs": {
+    "url" : "https://github.com/RonenNess/ShackDB/issues",
+    "email" : "ronenness@gmail.com"
+  }
   "author": "Ronen Ness",
   "license": "GPLv3"
 }
